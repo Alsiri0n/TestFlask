@@ -1,0 +1,8 @@
+web:
+  build: .
+  container_name: app
+  ports:
+    - "1234:5050"
+  environment:
+    - MYKEY=some_value
+    - otherkey=3
