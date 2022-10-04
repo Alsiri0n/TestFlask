@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                sh 'mkdir -p /root/floko3/'
                 sh 'cp -rvf * /root/floko3/'
                 sh 'mvn --version'
             }
