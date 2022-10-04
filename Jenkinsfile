@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                sh 'cp -rvf * /root/floko3'
+                sh 'sudo cp -rvf * /root/floko3'
             }
         }
         stage('Build') {
