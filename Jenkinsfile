@@ -4,8 +4,7 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                sh 'cp -rvf * /root/floko3/'
-                sh 'mvn --version'
+                sh 'cp -rvf * /root/floko3'
             }
         }
         stage('Build') {
