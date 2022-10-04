@@ -4,5 +4,5 @@ web:
   ports:
     - "1234:5050"
   environment:
-    - MYKEY=some_value
-    - otherkey=3
+    - flask_port=${PORT}
+    - flask_host=${HOST}
