@@ -9,12 +9,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh 'sudo docker-compose -f /root/floko3/docker-compose.yml build'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                sh 'sudo docker-compose -f /root/floko3/docker-compose.yml up -d'
             }
         }
     }
