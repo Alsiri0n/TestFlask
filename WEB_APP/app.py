@@ -12,4 +12,6 @@ def index():
 
 
 if __name__ == "__main__":
+    print(FLASK_HOST)
+    print(FLASK_PORT)
     app.run(host= FLASK_HOST, port= FLASK_PORT)
