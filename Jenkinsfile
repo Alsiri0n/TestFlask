@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                echo $EXAMPLE_CREDS
+                sh 'echo $EXAMPLE_CREDS'
                 sh 'sudo cp -rvf * /root/floko3'
             }
         }
