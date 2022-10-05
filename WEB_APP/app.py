@@ -1,8 +1,8 @@
 import os
 from flask import Flask
 
-FLASK_HOST = str(os.environ.get('flask_host'))
-FLASK_PORT = int(os.environ.get('FLASKP'))
+FLASK_HOST = str(os.environ.get('FLASK-HOST'))
+FLASK_PORT = int(os.environ.get('FLASK-PORT'))
 
 app = Flask(__name__)
 
@@ -13,6 +13,4 @@ def index():
 
 
 if __name__ == "__main__":
-    print(FLASK_HOST)
-    print(FLASK_PORT)
     app.run(host= FLASK_HOST, port= FLASK_PORT)

@@ -3,6 +3,3 @@ web:
   container_name: floko
   ports:
     - "1234:5050"
-  environment:
-    - FLASKP
-    - flask_host=0.0.0.0
