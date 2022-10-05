@@ -1,7 +1,8 @@
 pipeline {
     agent {label "ubuntu"}
     environment {
-        EXAMPLE_CREDS = credentials('flask-host')
+        FLASK_HOST = credentials('flask-host')
+        FLASK_PORT = credentials('flask-port')
     }
 
     stages {

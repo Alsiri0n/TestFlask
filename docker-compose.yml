@@ -4,5 +4,5 @@ web:
   ports:
     - "1234:5050"
   environment:
-    - flask_port=${PORT}
-    - flask_host=${HOST}
+    - flask_port=${FLASK-PORT}
+    - flask_host=${FLASK-HOST}
