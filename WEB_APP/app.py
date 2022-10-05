@@ -1,3 +1,6 @@
+"""
+Test application for testing CI/CD
+"""
 import os
 from flask import Flask
 
@@ -9,6 +12,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """
+    Main page of the site
+    """
     return 'ok\n'
 
 
