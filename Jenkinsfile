@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'sudo HOST= $FLASK_HOST PORT= $FLASK_PORT docker-compose -f /root/floko3/docker-compose.yml up -d'
+                sh 'sudo HOST=$FLASK_HOST PORT=$FLASK_PORT docker-compose -f /root/floko3/docker-compose.yml up -d'
             }
         }
     }
