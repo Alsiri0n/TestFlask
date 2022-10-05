@@ -15,12 +15,12 @@ pipeline {
         }
         stage('Build') {
             steps {
+                sh 'echo $TEST_ENV'
                 sh 'sudo docker-compose -f /root/floko3/docker-compose.yml build'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'echo $TEST_ENV'
                 sh 'sudo HOST=$FLASK_HOST PORT=$FLASK_PORT docker-compose -f /root/floko3/docker-compose.yml up -d'
             }
         }
