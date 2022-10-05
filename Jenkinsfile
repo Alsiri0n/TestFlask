@@ -3,6 +3,7 @@ pipeline {
     environment {
         FLASK_HOST = credentials('flask-host')
         FLASK_PORT = credentials('flask-port')
+        TEST_ENV = '5050'
     }
 
     stages {
@@ -19,6 +20,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                sh 'echo $TEST_ENV'
                 sh 'sudo HOST=$FLASK_HOST PORT=$FLASK_PORT docker-compose -f /root/floko3/docker-compose.yml up -d'
             }
         }
