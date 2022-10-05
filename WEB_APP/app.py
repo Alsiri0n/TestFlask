@@ -10,6 +10,7 @@ FLASK_PORT = int(os.environ.get('flask_port'))
 app = Flask(__name__)
 
 
+@app.route('/index')
 @app.route('/')
 def index():
     """
@@ -17,6 +18,13 @@ def index():
     """
     return 'ok\n'
 
+@app.route('/about')
+def about():
+    """
+    About page of the site
+    """
+    return "<h1>О сайте</h1>"
+
 
 if __name__ == "__main__":
-    app.run(host= FLASK_HOST, port= FLASK_PORT)
+    app.run(host=FLASK_HOST, port=FLASK_PORT)
