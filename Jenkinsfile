@@ -1,13 +1,13 @@
 pipeline {
     agent {label "ubuntu"}
     environment {
-        EXAMPLE_CREDS=credentials('flask-host')
+        EXAMPLE_CREDS = credentials('flask-host')
     }
 
     stages {
         stage('SCM Checkout') {
             steps {
-                echo $flask-host
+                echo $EXAMPLE_CREDS
                 sh 'sudo cp -rvf * /root/floko3'
             }
         }
