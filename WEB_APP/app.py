@@ -6,6 +6,7 @@ FLASK_PORT = int(os.environ.get('flask_port'))
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return 'ok\n'
