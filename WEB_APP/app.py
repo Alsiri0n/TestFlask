@@ -1,8 +1,8 @@
 import os
 from flask import Flask
 
-FLASK_HOST = str(os.environ.get('FLASK-HOST'))
-FLASK_PORT = int(os.environ.get('FLASK-PORT'))
+FLASK_HOST = str(os.environ.get('flask_port'))
+FLASK_PORT = int(os.environ.get('flask_host'))
 
 app = Flask(__name__)
 
