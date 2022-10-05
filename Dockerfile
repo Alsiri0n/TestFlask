@@ -8,6 +8,7 @@ RUN yum install net-tools -y
 RUN yum install httpd -y
 RUN yum install python3 -y
 RUN echo $FLASK-PORT
+RUN echo $PATH
 COPY requirements.txt /home
 RUN pip3 install -r /home/requirements.txt
 COPY WEB_APP My_App
