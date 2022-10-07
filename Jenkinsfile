@@ -1,6 +1,16 @@
 pipeline {
     agent {label "ubuntu"}
 
+    node {
+        checkout([
+            $class: 'GitSCM',
+            branches: scm.branches,
+            doGenerateSubmoduleConfigurations: true,
+            extensions: scm.extensions + [[$class: 'SubmoduleOption', parentCredentials: true]],
+            userRemoteConfigs: scm.userRemoteConfigs
+        ])
+    }
+
     stages {
         stage('SCM Checkout') {
             steps {
