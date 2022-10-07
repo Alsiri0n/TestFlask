@@ -1,0 +1,18 @@
+body {
+    background-color: #1d2a35;
+}
+h1 {
+    color: #f1f1f1;
+}
+A:visited {
+    color: #c58af9;
+}
+A:hover {
+  background-color: #2978ee;
+}
+div {
+    color: #f1f1f1;
+  }
+.top-menu {
+  background-color: #333;
+}

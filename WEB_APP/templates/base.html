@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+        {% if request.cookies.get("theme") %}
+            <link rel="stylesheet" href="/static/css/{{ request.cookies.get("theme") }}.css">
+        {% else %}
+            <link rel="stylesheet" href=""{{ url_for('static', filename='css/light.css') }}s">
+        {% endif %}
+        {% block title -%}
+            {% if title %}
+                <title>Floko3 - {{ title }}</title>
+            {% else %}
+                <title>Floko3</title>
+            {% endif %}
+        {% endblock %}
+    </head>
+    <body>
+        {%- block mainmenu -%}
+            <nav class="top-menu">
+                <ul class="menu-main">
+                    {% for m in menu -%}
+                        <li class="left-item"><a href="{{m.url}}">{{m.name}}</a></li>
+                    {% endfor -%}
+                    <li class="right-item"><a href="/set/light">Light</a></li>
+                    <li class="right-item"><a href="/set/dark">Dark</a></li>
+                </ul>
+            </nav>
+        {% endblock mainmenu -%}
+        <div class="container">
+            {% block content -%}
+            {% endblock %}
+        </div>
+    </body>
+</html>

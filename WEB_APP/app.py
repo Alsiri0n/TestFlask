@@ -2,14 +2,19 @@
 Test application for testing CI/CD
 """
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
+from flform.flform import flform
+
 
 FLASK_HOST = str(os.environ.get('flask_host'))
 FLASK_PORT = int(os.environ.get('flask_port'))
 
 app = Flask(__name__)
+app.register_blueprint(flform, url_prefix='/flokoform')
 
-myMenu = ['Установка', 'Первое приложение', 'Обратная связь']
+myMenu = [{"name": "Установка", "url": "install-flask"},
+          {"name": "Первое приложение", "url": "first-app"},
+          {"name": "Обратная связь", "url": "flokoform"}]
 @app.route('/index')
 @app.route('/')
 def index():
