@@ -2,7 +2,7 @@
 Test application for testing CI/CD
 """
 import os
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, make_response,redirect
 from flform.flform import flform
 
 
@@ -30,6 +30,15 @@ def about():
     """
     return render_template('about.html', title='About', menu=myMenu)
 
+@app.route('/set')
+@app.route('/set/<theme>')
+def set_theme(theme="light"):
+    """
+    This handler save theme in user cookies.
+    """
+    res = make_response(redirect(url_for(".index")))
+    res.set_cookie("theme", theme)
+    return res
 
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
