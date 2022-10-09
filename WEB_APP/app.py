@@ -8,13 +8,17 @@ from flform.flform import flform
 
 FLASK_HOST = str(os.environ.get('flask_host'))
 FLASK_PORT = int(os.environ.get('flask_port'))
+SECRET_KEY = str(os.environ.get('secret_key'))
+
 
 app = Flask(__name__)
 app.register_blueprint(flform, url_prefix='/flokoform')
+app.config['SECRET_KEY'] = SECRET_KEY
 
 myMenu = [{"name": "Установка", "url": "install-flask"},
           {"name": "Первое приложение", "url": "first-app"},
           {"name": "Обратная связь", "url": "flokoform"}]
+
 @app.route('/index')
 @app.route('/')
 def index():
@@ -36,7 +40,9 @@ def set_theme(theme="light"):
     """
     This handler save theme in user cookies.
     """
+    # print(request.referrer)
     res = make_response(redirect(url_for(".index")))
+    # res = make_response(redirect(url_for(request.referrer.endpoint)))
     res.set_cookie("theme", theme)
     return res
 
