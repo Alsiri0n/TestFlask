@@ -16,3 +16,11 @@ div {
 .top-menu {
   background-color: #333;
 }
+
+.flash.error {
+  color: #1e1e1e;
+}
+
+.flash.success {
+  color: #1e1e1e;
+}
