@@ -47,11 +47,11 @@ def set_theme(theme="light"):
     return res
 
 @app.errorhandler(404)
-def pageNoFound(error):
+def page_not_found(error):
     """
     404 Error Page
     """
-    return render_template('page404.html', title="Страница не найдена")
+    return render_template('page404.html', title="Страница не найдена"), 404
 
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
