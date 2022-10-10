@@ -46,5 +46,12 @@ def set_theme(theme="light"):
     res.set_cookie("theme", theme)
     return res
 
+@app.errorhandler(404)
+def pageNoFound(error):
+    """
+    404 Error Page
+    """
+    return render_template('page404.html', title="Страница не найдена")
+
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
