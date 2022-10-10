@@ -53,5 +53,9 @@ def page_not_found(error):
     """
     return render_template('page404.html', title="Страница не найдена"), 404
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    pass
+
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
