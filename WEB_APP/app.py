@@ -4,6 +4,7 @@ Test application for testing CI/CD
 import os
 from flask import Flask, render_template, url_for, make_response,redirect
 from flform.flform import flform
+from fllogin.fllogin import fllogin
 
 
 FLASK_HOST = str(os.environ.get('flask_host'))
@@ -12,12 +13,13 @@ SECRET_KEY = str(os.environ.get('secret_key'))
 
 
 app = Flask(__name__)
-app.register_blueprint(flform, url_prefix='/flokoform')
+app.register_blueprint(flform, url_prefix='/form')
+app.register_blueprint(fllogin, url_prefix='/login')
 app.config['SECRET_KEY'] = SECRET_KEY
 
 myMenu = [{"name": "Установка", "url": "install-flask"},
           {"name": "Первое приложение", "url": "first-app"},
-          {"name": "Обратная связь", "url": "flokoform"}]
+          {"name": "Обратная связь", "url": "form"}]
 
 @app.route('/index')
 @app.route('/')
@@ -52,10 +54,6 @@ def page_not_found(error):
     404 Error Page
     """
     return render_template('page404.html', title="Страница не найдена"), 404
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    pass
 
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
