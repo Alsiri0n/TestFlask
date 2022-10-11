@@ -4,3 +4,6 @@
 [submodule "WEB_APP/fllogin"]
 	path = WEB_APP/fllogin
 	url = git@github.com:Alsiri0n/fllogin.git
+[submodule "WEB_APP/flprofile"]
+	path = WEB_APP/flprofile
+	url = git@github.com:Alsiri0n/flprofile.git
