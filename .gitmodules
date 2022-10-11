@@ -1,6 +1,6 @@
 [submodule "WEB_APP/flform"]
 	path = WEB_APP/flform
-	url = git@github.com:Alsiri0n/TestSubmodule.git
+	url = git@github.com:Alsiri0n/flform.git
 [submodule "WEB_APP/fllogin"]
 	path = WEB_APP/fllogin
 	url = git@github.com:Alsiri0n/fllogin.git
