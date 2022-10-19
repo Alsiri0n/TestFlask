@@ -6,6 +6,7 @@ RUN dnf install net-tools -y
 RUN dnf install httpd -y
 RUN dnf install python3 -y
 RUN dnf install postgresql-devel -y
+RUN dnf install gcc -y
 COPY requirements.txt /home
 RUN pip3 install -r /home/requirements.txt
 COPY WEB_APP My_App
