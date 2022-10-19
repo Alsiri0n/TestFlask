@@ -3,6 +3,7 @@ Test application for testing CI/CD
 """
 import os
 from flask import Flask, render_template, url_for, make_response,redirect
+from flask_sqlalchemy import SQLAlchemy
 from flform.flform import flform
 from fllogin.fllogin import fllogin
 from flprofile.flprofile import flprofile
@@ -18,6 +19,7 @@ app.register_blueprint(flform, url_prefix='/form')
 app.register_blueprint(fllogin, url_prefix='/login')
 app.register_blueprint(flprofile, url_prefix='/profile')
 app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SQLALCHEMY_DATABASE_URI'] = SECRET_KEY
 
 myMenu = [{"name": "Установка", "url": "install-flask"},
           {"name": "Первое приложение", "url": "first-app"},
