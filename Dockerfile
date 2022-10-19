@@ -14,4 +14,4 @@ RUN pip3 install -r /home/requirements.txt
 COPY WEB_APP My_App
 WORKDIR My_App
 ENTRYPOINT ["python3", "app.py"]
-EXPOSE 3000 5050`ёё
+EXPOSE 3000 5050
