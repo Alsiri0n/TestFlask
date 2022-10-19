@@ -6,3 +6,4 @@ Jinja2==3.0.3
 MarkupSafe==2.0.1
 Werkzeug==2.0.3
 SQLAlchemy==1.4.42
+psycopg2-binary==2.9.4
