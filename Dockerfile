@@ -7,7 +7,7 @@ RUN yum install httpd -y
 RUN yum install python3 -y
 # RUN yum install libpq-devel -y
 # RUN yum install gcc -y
-RUN yum install postgresql-libs
+RUN yum install postgresql-libs -y
 RUN echo $FLASKP
 RUN echo $PATH
 COPY requirements.txt /home
