@@ -5,8 +5,9 @@ RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|
 RUN yum install net-tools -y
 RUN yum install httpd -y
 RUN yum install python3 -y
-RUN yum install libpq-devel -y
-RUN yum install gcc -y
+# RUN yum install libpq-devel -y
+# RUN yum install gcc -y
+RUN yum install postgresql-libs
 RUN echo $FLASKP
 RUN echo $PATH
 COPY requirements.txt /home
