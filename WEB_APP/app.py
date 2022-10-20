@@ -3,6 +3,7 @@ Test application for testing CI/CD
 """
 import os
 from flask import Flask, render_template, url_for, make_response,redirect
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flform.flform import flform
 from fllogin.fllogin import fllogin
@@ -12,7 +13,12 @@ from flprofile.flprofile import flprofile
 FLASK_HOST = str(os.environ.get('flask_host'))
 FLASK_PORT = int(os.environ.get('flask_port'))
 SECRET_KEY = str(os.environ.get('secret_key'))
+POSTGRES_URL = str(os.environ.get('postgres_url'))
+POSTGRES_USER = str(os.environ.get('postgres_user'))
+POSTGRES_PW = str(os.environ.get('postgres_pw'))
+POSTGRES_DB = str(os.environ.get('postgres_db'))
 
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
 
 app = Flask(__name__)
 app.register_blueprint(flform, url_prefix='/form')
@@ -20,6 +26,33 @@ app.register_blueprint(fllogin, url_prefix='/login')
 app.register_blueprint(flprofile, url_prefix='/profile')
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = SECRET_KEY
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
+
+db = SQLAlchemy(app)
+
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(50), unique=True)
+    psw = db.Column(db.String(500), nullable=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'<users {self.id}>'
+
+class Profiles(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=True)
+    old = db.Column(db.Integer)
+    city = db.Column(db.String(100))
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __repr__(self):
+        return f'<profiles {self.id}>'
+
 
 myMenu = [{"name": "Установка", "url": "install-flask"},
           {"name": "Первое приложение", "url": "first-app"},
