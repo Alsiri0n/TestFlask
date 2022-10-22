@@ -22,7 +22,7 @@
             <nav class="top-menu">
                 <ul class="menu-main">
                     {% for m in menu -%}
-                        <li class="left-item"><a href="{{m.url}}">{{m.name}}</a></li>
+                        <li class="left-item"><a href="{{m.cururl}}">{{m.title}}</a></li>
                     {% endfor -%}
                     <li class="right-item"><a href="/set/light">Light</a></li>
                     <li class="right-item"><a href="/set/dark">Dark</a></li>
