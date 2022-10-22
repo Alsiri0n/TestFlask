@@ -170,7 +170,9 @@ def page_not_found(error):
     """
     404 Error Page
     """
-    return render_template('page404.html', title="Страница не найдена"), 404
+    cur_db = get_db()
+    dbase = Flsql(cur_db)
+    return render_template('page404.html', menu=dbase.get_menu(), title="Страница не найдена"), 404
 
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
