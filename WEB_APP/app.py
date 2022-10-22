@@ -105,7 +105,7 @@ def index():
     """
     cur_db = get_db()
     dbase = Flsql(cur_db)
-    return render_template('index.html', menu=dbase.get_menu())
+    return render_template('index.html', menu=dbase.get_menu(), posts=dbase.get_posts_announcement())
 
 
 @app.route('/about')
