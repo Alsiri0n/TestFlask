@@ -2,10 +2,10 @@
 Test application for testing CI/CD
 """
 import os
+from datetime import datetime
 import psycopg2
 import psycopg2.extras
-from datetime import datetime
-from flask import Flask, g, render_template, url_for, make_response,redirect
+from flask import Flask, g, render_template, request, url_for, make_response,redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flform.flform import flform
 from fllogin.fllogin import fllogin
@@ -96,10 +96,6 @@ def close_db(error):
         g.link_db.close()
 
 
-myMenu = [{"name": "Установка", "url": "install-flask"},
-          {"name": "Первое приложение", "url": "first-app"},
-          {"name": "Обратная связь", "url": "form"}]
-
 @app.route('/index')
 @app.route('/')
 def index():
@@ -115,7 +111,7 @@ def about():
     """
     About page of the site
     """
-    return render_template('about.html', title='About', menu=myMenu)
+    return render_template('about.html', title='About', menu=dbase.get_menu())
 
 @app.route('/set')
 @app.route('/set/<theme>')
@@ -128,6 +124,26 @@ def set_theme(theme="light"):
     # res = make_response(redirect(url_for(request.referrer.endpoint)))
     res.set_cookie("theme", theme)
     return res
+
+
+@app.route("/add_post", methods=["GET", "POST"])
+def addPost():
+    '''
+    Adding post function
+    '''
+    db = get_db()
+    dbase = Flsql(db)
+
+    if request.method == "POST":
+        if len(request.form['name'])>4 and len(request.form['post'])>10:
+            res = dbase.add_post(request.form['name'], request.form['post'])
+            if not res:
+                flash('Ошибка добавления статьи', category='error')
+            else:
+                flash('Статья добавлена успешно', category='success')
+        else:
+            flash('Ошибка добавления статьи', category='error')
+    return render_template('add_post.html', menu=dbase.get_menu(), title='Добавление статьи')
 
 @app.errorhandler(404)
 def page_not_found(error):
