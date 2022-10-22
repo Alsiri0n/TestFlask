@@ -6,3 +6,8 @@ web:
   environment:
     - flask_port=$FLASKPORT
     - flask_host=$FLASKHOST
+    - postgres_url=$POSTGRESURL
+    - postgres_port=$POSTGRESPORT
+    - postgres_user=$POSTGRESUSER
+    - postgres_pw=$POSTGRESPW
+    - postgres_db=$POSTGRESDB

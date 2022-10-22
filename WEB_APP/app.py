@@ -83,10 +83,6 @@ def get_db():
     Get database link from global variable
     '''
     if not hasattr(g, 'link_db'):
-        print(f'URL - {POSTGRES_URL}')
-        print(f'DB - {POSTGRES_DB}')
-        print(f'USER - {POSTGRES_USER}')
-        print(f'PW - {POSTGRES_PW}')
         g.link_db = connect_db()
     return g.link_db
 
