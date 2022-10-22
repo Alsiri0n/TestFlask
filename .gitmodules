@@ -7,3 +7,6 @@
 [submodule "WEB_APP/flprofile"]
 	path = WEB_APP/flprofile
 	url = git@github.com:Alsiri0n/flprofile.git
+[submodule "WEB_APP/flsql"]
+	path = WEB_APP/flsql
+	url = git@github.com:Alsiri0n/flsql.git
