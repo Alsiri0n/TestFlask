@@ -63,10 +63,6 @@ def connect_db():
     '''
     This funcction create connection to dsatabase
     '''
-    print(f'URL - {POSTGRES_URL}')
-    print(f'DB - {POSTGRES_DB}')
-    print(f'USER - {POSTGRES_USER}')
-    print(f'PW - {POSTGRES_PW}')
     conn = psycopg2.connect(host=POSTGRES_URL, database=POSTGRES_DB, user=POSTGRES_USER, password=POSTGRES_PW)
     return conn
 
@@ -87,6 +83,10 @@ def get_db():
     Get database link from global variable
     '''
     if not hasattr(g, 'link_db'):
+        print(f'URL - {POSTGRES_URL}')
+        print(f'DB - {POSTGRES_DB}')
+        print(f'USER - {POSTGRES_USER}')
+        print(f'PW - {POSTGRES_PW}')
         g.link_db = connect_db()
     return g.link_db
 
