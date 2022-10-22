@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 import psycopg2
 import psycopg2.extras
-from flask import Flask, g, render_template, request, url_for, make_response,redirect, flash
+from flask import Flask, g, render_template, request, url_for, make_response,redirect, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from flform.flform import flform
 from fllogin.fllogin import fllogin
@@ -31,10 +31,10 @@ app.register_blueprint(fllogin, url_prefix='/login')
 app.register_blueprint(flprofile, url_prefix='/profile')
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = SECRET_KEY
-
-
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
+
+app.config['TESTING'] = True
 
 db = SQLAlchemy(app)
 
@@ -60,28 +60,29 @@ class Profiles(db.Model):
 
 
 def connect_db():
-    '''
-    This funcction create connection to dsatabase
-    '''
-    conn = psycopg2.connect(host=POSTGRES_URL, database=POSTGRES_DB, user=POSTGRES_USER, password=POSTGRES_PW)
+    """
+    This function create connection to dsatabase
+    """
+    conn = psycopg2.connect(host=POSTGRES_URL, database=POSTGRES_DB,
+            user=POSTGRES_USER, password=POSTGRES_PW)
     return conn
 
 
 def create_db():
-    '''
+    """
     Additional function for creation database
-    '''
+    """
     cur_db = connect_db()
-    with app.open_resource('sql_db.sql', mode='r') as f:
-        cur_db.cursor().execute(f.read())
+    with app.open_resource('sql_db.sql', mode='r') as file:
+        cur_db.cursor().execute(file.read())
     cur_db.commit()
     cur_db.close()
 
 
 def get_db():
-    '''
+    """
     Get database link from global variable
-    '''
+    """
     if not hasattr(g, 'link_db'):
         g.link_db = connect_db()
     return g.link_db
@@ -89,9 +90,9 @@ def get_db():
 
 @app.teardown_appcontext
 def close_db(error):
-    '''
+    """
     Close connection to database, if connected
-    '''
+    """
     if hasattr(g, 'link_db'):
         g.link_db.close()
 
@@ -102,16 +103,20 @@ def index():
     """
     Main page of the site
     """
-    db = get_db()
-    dbase = Flsql(db)
+    cur_db = get_db()
+    dbase = Flsql(cur_db)
     return render_template('index.html', menu=dbase.get_menu())
+
 
 @app.route('/about')
 def about():
     """
     About page of the site
     """
+    cur_db = get_db()
+    dbase = Flsql(cur_db)
     return render_template('about.html', title='About', menu=dbase.get_menu())
+
 
 @app.route('/set')
 @app.route('/set/<theme>')
@@ -126,13 +131,13 @@ def set_theme(theme="light"):
     return res
 
 
-@app.route("/add_post", methods=["GET", "POST"])
-def addPost():
-    '''
+@app.route('/add_post', methods=["GET", "POST"])
+def add_post():
+    """
     Adding post function
-    '''
-    db = get_db()
-    dbase = Flsql(db)
+    """
+    cur_db = get_db()
+    dbase = Flsql(cur_db)
 
     if request.method == "POST":
         if len(request.form['name'])>4 and len(request.form['post'])>10:
@@ -144,6 +149,21 @@ def addPost():
         else:
             flash('Ошибка добавления статьи', category='error')
     return render_template('add_post.html', menu=dbase.get_menu(), title='Добавление статьи')
+
+
+@app.route('/post/<int:id_post>')
+def show_post(id_post):
+    """
+    Function showing post by id
+    """
+    cur_db = get_db()
+    dbase = Flsql(cur_db)
+    title, post = dbase.get_post(id_post).values()
+    if not title:
+        abort(404)
+
+    return render_template('post.html', menu=dbase.get_menu(), title=title, post=post)
+
 
 @app.errorhandler(404)
 def page_not_found(error):
