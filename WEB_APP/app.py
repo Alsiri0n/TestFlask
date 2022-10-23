@@ -151,14 +151,14 @@ def add_post():
     return render_template('add_post.html', menu=dbase.get_menu(), title='Добавление статьи')
 
 
-@app.route('/post/<int:id_post>')
-def show_post(id_post):
+@app.route('/post/<alias>')
+def show_post(alias):
     """
     Function showing post by id
     """
     cur_db = get_db()
     dbase = Flsql(cur_db)
-    title, post = dbase.get_post(id_post).values()
+    title, post = dbase.get_post(alias).values()
     if not title:
         abort(404)
 
