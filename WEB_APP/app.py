@@ -141,7 +141,7 @@ def add_post():
 
     if request.method == "POST":
         if len(request.form['name'])>4 and len(request.form['post'])>10:
-            res = dbase.add_post(request.form['name'], request.form['post'])
+            res = dbase.add_post(request.form['name'], request.form['post'], request.form['url'])
             if not res:
                 flash('Ошибка добавления статьи', category='error')
             else:
