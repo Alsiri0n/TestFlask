@@ -58,6 +58,18 @@ class Profiles(db.Model):
     def __repr__(self):
         return f'<profiles {self.id}>'
 
+dbase = None
+
+@app.before_request
+def before_request():
+    '''
+    Establish connection to DB before execution request
+    '''
+    global dbase
+    cur_db = get_db()
+    dbase = Flsql(cur_db)
+
+
 
 def connect_db():
     """
@@ -103,8 +115,6 @@ def index():
     """
     Main page of the site
     """
-    cur_db = get_db()
-    dbase = Flsql(cur_db)
     return render_template('index.html', menu=dbase.get_menu(), posts=dbase.get_posts_announcement())
 
 
@@ -113,8 +123,6 @@ def about():
     """
     About page of the site
     """
-    cur_db = get_db()
-    dbase = Flsql(cur_db)
     return render_template('about.html', title='About', menu=dbase.get_menu())
 
 
@@ -136,9 +144,6 @@ def add_post():
     """
     Adding post function
     """
-    cur_db = get_db()
-    dbase = Flsql(cur_db)
-
     if request.method == "POST":
         if len(request.form['name'])>4 and len(request.form['post'])>10:
             res = dbase.add_post(request.form['name'], request.form['post'], request.form['url'])
@@ -156,8 +161,6 @@ def show_post(alias):
     """
     Function showing post by id
     """
-    cur_db = get_db()
-    dbase = Flsql(cur_db)
     title, post = dbase.get_post(alias).values()
     if not title:
         abort(404)
@@ -170,8 +173,6 @@ def page_not_found(error):
     """
     404 Error Page
     """
-    cur_db = get_db()
-    dbase = Flsql(cur_db)
     return render_template('page404.html', menu=dbase.get_menu(), title="Страница не найдена"), 404
 
 if __name__ == "__main__":
