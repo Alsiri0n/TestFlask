@@ -22,8 +22,10 @@ POSTGRES_USER = str(os.environ.get('postgres_user'))
 POSTGRES_PW = str(os.environ.get('postgres_pw'))
 POSTGRES_DB = str(os.environ.get('postgres_db'))
 
-DB_URL = f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PW}\
-        @{POSTGRES_URL}:{POSTGRES_PORT}/{POSTGRES_DB}'
+DB_URL = (
+    f'postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PW}'
+    f'@{POSTGRES_URL}:{POSTGRES_PORT}/{POSTGRES_DB}'
+)
 
 app = Flask(__name__)
 app.register_blueprint(flform, url_prefix='/form')
@@ -40,9 +42,10 @@ db = SQLAlchemy(app)
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True)
     email = db.Column(db.String(50), unique=True)
     psw = db.Column(db.String(500), nullable=True)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
+    registerdate = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'<users {self.id}>'
@@ -60,11 +63,12 @@ class Profiles(db.Model):
 
 dbase = None
 
+
 @app.before_request
 def before_request():
-    '''
+    """
     Establish connection to DB before execution request
-    '''
+    """
     global dbase
     cur_db = get_db()
     dbase = Flsql(cur_db)
@@ -115,7 +119,9 @@ def index():
     """
     Main page of the site
     """
-    return render_template('index.html', menu=dbase.get_menu(), posts=dbase.get_posts_announcement())
+    return render_template('index.html',
+     menu=dbase.get_menu(),
+     posts=dbase.get_posts_announcement())
 
 
 @app.route('/about')
@@ -133,18 +139,18 @@ def set_theme(theme="light"):
     This handler save theme in user cookies.
     """
     # print(request.referrer)
-    res = make_response(redirect(url_for(".index")))
+    res = make_response(redirect(url_for('.index')))
     # res = make_response(redirect(url_for(request.referrer.endpoint)))
-    res.set_cookie("theme", theme)
+    res.set_cookie('theme', theme)
     return res
 
 
-@app.route('/add_post', methods=["GET", "POST"])
+@app.route('/add_post', methods=['GET', 'POST'])
 def add_post():
     """
     Adding post function
     """
-    if request.method == "POST":
+    if request.method == 'POST':
         if len(request.form['name'])>4 and len(request.form['post'])>10:
             res = dbase.add_post(request.form['name'], request.form['post'], request.form['url'])
             if not res:
@@ -173,7 +179,7 @@ def page_not_found(error):
     """
     404 Error Page
     """
-    return render_template('page404.html', menu=dbase.get_menu(), title="Страница не найдена"), 404
+    return render_template('page404.html', menu=dbase.get_menu(), title='Страница не найдена'), 404
 
 if __name__ == "__main__":
     app.run(host=FLASK_HOST, port=FLASK_PORT)
