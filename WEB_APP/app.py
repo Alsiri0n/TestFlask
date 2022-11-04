@@ -32,7 +32,6 @@ app.register_blueprint(flform, url_prefix='/form')
 app.register_blueprint(fllogin, url_prefix='/login')
 app.register_blueprint(flprofile, url_prefix='/profile')
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
 
